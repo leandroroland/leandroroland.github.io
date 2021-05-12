@@ -19,15 +19,10 @@
 	 crossorigin="anonymous">
 
 
-	<script src="js/preloader.js"></script>
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="/js/animate.js" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	 crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-	 crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-	 crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 	<title>Leandro Roland - Diseñador Grafico</title>
 
@@ -63,30 +58,27 @@
 					<span class="navbar-toggler-icon"><i style="color: #fff;" class="fas fa-bars fa-lg"></i></span>
 				</button>
 				<div id="navbarNav" class="navbar-collapse justify-content-center collapse" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<?php wp_nav_menu( array(
-			'menu' => 'menu',
-			'theme_location' => 'menu',
-			'depth' => 2,
-			'container' => false,
-			'container_id' => 'navbarNav',
-			'menu_class' => 'nav navbar-nav',
-			'fallback_cb' => 'wp_bootstrap_navwalker::fallback',
-			'walker' => new wp_bootstrap_navwalker())
-		  );?>
+				data-target=".navbar-collapse">
+					<ul class="navbar-nav">
+						<li class="nav-item bb_button_bottom">
+							<a class="nav-link active" href="#header">Inicio</a>
+						</li>
+						<li class="nav-item bb_button_bottom">
+							<a class="nav-link" href="#services">Servicios</a>
+						</li>
+						<li class="nav-item bb_button_bottom">
+							<a class="nav-link" href="#aboutme">Sobre mi</a>
+						</li>
+						<li class="nav-item bb_button_bottom">
+							<a class="nav-link" href="#portfolio">Portafolio</a>
+						</li>
+					</ul>
 				</div>
 				<div id="navbarNav" class="navbar-collapse justify-content-end contact-link collapse" data-toggle="collapse"
 					data-target=".navbar-collapse">
-					<?php wp_nav_menu( array(
-			'menu' => 'menu2',
-			'theme_location' => 'menu2',
-			'depth' => 2,
-			'container' => false,
-			'container_id' => 'navbarNav',
-			'menu_class' => 'nav navbar-nav bb_button_2',
-			'fallback_cb' => 'wp_bootstrap_navwalker::fallback',
-			'walker' => new wp_bootstrap_navwalker())
-		  );?>
+					<li class="nav-item bb_button_2">
+						<a class="nav-link bb_button bb_button--diag-1" href="#">Contactame</a>
+					</li>
 				</div>
 			</div>
 		</nav>
@@ -99,19 +91,19 @@
 	
 		<ul class="social">
 			<li class="item1">
-				<button type="button" class="btn btn-custom bb_button bb_button--diag-1"><i
+				<button type="button" class="btn-custom bb_button bb_button--diag-1"><i
 						class="fab fa-facebook-f icon-social"></i></button>
 			</li>
 			<li class="item2">
-				<button type="button" class="btn btn-custom bb_button2 bb_button--diag-2"><i
+				<button type="button" class="btn-custom bb_button2 bb_button--diag-2"><i
 						class="fab fa-twitter icon-social"></i></button>
 			</li>
 			<li class="item3">
-				<button type="button" class="btn btn-custom bb_button2 bb_button--diag-2"><i
+				<button type="button" class="btn-custom bb_button2 bb_button--diag-2"><i
 						class="fab fa-whatsapp icon-social"></i></button>
 			</li>
 			<li class="item4">
-				<button type="button" class="btn btn-custom bb_button bb_button--diag-1"><i
+				<button type="button" class="btn-custom bb_button bb_button--diag-1"><i
 						class="fab fa-instagram icon-social"></i></button>
 			</li>
 		</ul>
@@ -323,15 +315,12 @@
 	<footer class="container-fluid">
 		<div class="footer wow zoomIn">
 			<div class="logo-footer row">
-				<span class="l-foot">L</span><span class="r-foot">R</span>
 				<div class="iso-footer">
-					<h1>LEANDRO</h1>
-					<h1 style="letter-spacing: 0.1em;">ROLAND</h1>
-					<h4>DISEÑADOR GRAFICO</h4>
+					<img id="logo-footer" src="images/logo_exp2.svg" width="350" class="img-fluid" alt="Responsive logo-footer">
 				</div>
 			</div>
 			<div class="copyright">
-				<span>© 2019 LRDesign - Todos los derechos reservados - Sitio desarrolado por Leandro Roland</span>
+				<span>Copyright © 2020 LRDesign - Todos los derechos reservados - Sitio desarrollado por Leandro Roland</span>
 			</div>
 			<div class="social-footer row">
 				<div class="box-icon align-items-center justify-content-center"> <span class="fab fa-2x fa-facebook-f service-icon"></span>
@@ -344,7 +333,7 @@
 				</div>
 			</div>
 		</div>
-
+	
 	</footer>
 
 	<!-- Optional JavaScript -->
