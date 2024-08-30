@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+    <div class="container py-3">
+        <!-- Encabezado y saludo -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <p class="mb-0">Hola, <strong>Leandro</strong></p>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-dark active">Negocio</button>
+                <button type="button" class="btn btn-outline-dark">Personal</button>
+            </div>
+        </div>
+
+        <div class=" row py-3 px-1 ">
+            <!-- Diseño responsivo -->
+            <div class="row-layout col-6 px-0">
+                <!-- Sección de Información -->
+                <div class="info-section">
+                    <!-- Ingresos del día -->
+                    <div class="card card-custom ps-3 py-2 mb-1 info-block">
+                        <p class="my-1">Ingresos del día</p>
+                        <h1 class="large-number mb-1">$43,500</h1>
+                    </div>
+                    <!-- Retirable y Guardar en fila -->
+                    <div class="d-flex justify-content-between">
+                        <div class="card card-custom text-center flex-grow-1 me-1">
+                            <p class="my-1">Retirable</p>
+                            <h4 class="mb-1">12,430</h4>
+                        </div>
+                        <div class="card card-custom text-center flex-grow-1">
+                            <p class="my-1">Guardar</p>
+                            <h4 class="mb-1">31,070</h4>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+               <!-- Sección de Gráfica -->
+               <div class="chart-section col-6 ps-1 pe-0">
+                <div class="card card-custom h-100 px-1">
+                    <div class="chart-container">
+                        <canvas id="incomeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+        <div class="container py-3 px-0">
+            <!-- Encabezado de filtro y fecha -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button class="btn btn-outline-secondary">
+                    <i class="fas fa-filter"></i>
+                </button>
+                <div class="date-selector">
+                    <button class="btn btn-link" id="prev-date">&lt;</button>
+                    <strong>26 de Agosto</strong>
+                    <button class="btn btn-link" id="next-date">&gt;</button>
+                </div>
+                <div class="view-toggle">
+                    <i class="fas fa-list"></i>
+                    <i class="fas fa-th-large"></i>
+                </div>
+            </div>
+    
+            <!-- Lista de servicios -->
+            <ul id="service-list" class="list-group mb-3 px-2">
+                <!-- Los elementos de la lista se agregarán dinámicamente aquí -->
+            </ul>
+        </div>
+
+          <!-- Navigation -->
+  <nav class="nav-custom">
+    <div class="contenedorNav container fixed-bottom d-flex justify-content-between align-items-center">
+      <!-- Home Icon -->
+      <a href="#" class="nav-icon ms-5 me-auto pb-3">
+        <i class="fas fa-home"></i>
+      </a>
+      <!-- Plus Button -->
+      <button type="button" class="btn btn-primary nav-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="fas fa-plus"></i>
+      </button>
+      <!-- Trash Icon -->
+      <a href="#" class="nav-icon ms-auto me-5 pb-3">
+        <i class="fas fa-trash-alt"></i>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <h2 class="mb-4">Agregar Servicio</h2>
+                <form id="serviceForm" class="row g-3">
+                    <div class="col-md-6">
+                        <label for="serviceName" class="form-label">Nombre del Servicio</label>
+                        <select class="form-select" id="serviceName" required>
+                            <option selected disabled value="">Selecciona un servicio</option>
+                            <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="paymentMethod" class="form-label">Método de Pago</label>
+                        <select class="form-select" id="paymentMethod" required>
+                            <option selected disabled value="">Selecciona un método</option>
+                            <option value="Pago en efectivo">Pago en efectivo</option>
+                            <option value="Pago electrónico">Pago electrónico</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="price" class="form-label">Precio</label>
+                        <input type="number" class="form-control" id="price" placeholder="6000" required readonly>
+                    </div>
+                    <input type="hidden" id="date">
+                    <input type="hidden" id="time">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Agregar Servicio</button>
+                    </div>
+                </form>
+                
+            </div>
+
+    <!-- Bootstrap JS y dependencias de Popper -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="app.js"></script>
+    <!-- Script para inicializar el gráfico -->
+    <script>
+        var ctx = document.getElementById('incomeChart').getContext('2d');
+        var incomeChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['MA', 'MI', 'JU', 'VI', 'SA'], // Etiquetas de los días
+                datasets: [{
+                    label: 'Ingresos',
+                    data: [50, 70, 80, 60, 90], // Datos de los ingresos
+                    backgroundColor: [
+                        'rgba(200, 200, 200, 0.7)',
+                        'rgba(200, 200, 200, 0.7)',
+                        'rgba(200, 200, 200, 0.7)',
+                        'rgba(200, 200, 200, 0.7)',
+                        'rgba(50, 50, 50, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(200, 200, 200, 1)',
+                        'rgba(200, 200, 200, 1)',
+                        'rgba(200, 200, 200, 1)',
+                        'rgba(200, 200, 200, 1)',
+                        'rgba(50, 50, 50, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            stepSize: 20
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
