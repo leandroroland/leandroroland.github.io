@@ -33,17 +33,17 @@
                     <!-- Ingresos del día -->
                     <div class="card card-custom ps-3 py-2 mb-1 info-block">
                         <p class="my-1">Ingresos del día</p>
-                        <h1 class="large-number mb-1">$43,500</h1>
+                        <h1 class="large-number mb-1" id="totalIngresosDia">""</h1>
                     </div>
                     <!-- Retirable y Guardar en fila -->
                     <div class="d-flex justify-content-between">
                         <div class="card card-custom text-center flex-grow-1 me-1">
                             <p class="my-1">Retirable</p>
-                            <h4 class="mb-1">12,430</h4>
+                            <h4 class="mb-1" id="retirable"></h4>
                         </div>
                         <div class="card card-custom text-center flex-grow-1">
                             <p class="my-1">Guardar</p>
-                            <h4 class="mb-1">31,070</h4>
+                            <h4 class="mb-1" id="guardar"></h4>
                         </div>
                     </div>
                 </div>
@@ -61,27 +61,43 @@
     
 
         <div class="container py-3 px-0">
-            <!-- Encabezado de filtro y fecha -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <button class="btn btn-outline-secondary">
-                    <i class="fas fa-filter"></i>
-                </button>
-                <div class="date-selector">
-                    <button class="btn btn-link" id="prev-date">&lt;</button>
-                    <strong>26 de Agosto</strong>
-                    <button class="btn btn-link" id="next-date">&gt;</button>
-                </div>
-                <div class="view-toggle">
-                    <i class="fas fa-list"></i>
-                    <i class="fas fa-th-large"></i>
-                </div>
-            </div>
+<!-- Encabezado de filtro y fecha -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <button class="btn btn-outline-secondary">
+        <i class="fas fa-filter"></i>
+    </button>
+    <div class="date-selector">
+        <button class="btn btn-link" id="prev-date">&lt;</button>
+        <strong id="current-date">26 de Agosto</strong>
+        <button class="btn btn-link" id="next-date">&gt;</button>
+    </div>
+    <div class="view-toggle">
+        <i class="fas fa-list"></i>
+        <i class="fas fa-th-large"></i>
+    </div>
+</div>
     
             <!-- Lista de servicios -->
             <ul id="service-list" class="list-group mb-3 px-2">
                 <!-- Los elementos de la lista se agregarán dinámicamente aquí -->
             </ul>
         </div>
+        <!-- Modal de servicios -->
+<div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="serviceModalLabel">Acciones de Servicio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Seleccione una acción para el servicio seleccionado.</p>
+          <button id="modifyButton" class="btn btn-warning w-100 mb-2">Modificar Precio o Método de Pago</button>
+          <button id="deleteButton" class="btn btn-danger w-100">Eliminar Servicio</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
           <!-- Navigation -->
   <nav class="nav-custom">
@@ -146,61 +162,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="app.js"></script>
     <!-- Script para inicializar el gráfico -->
-    <script>
-        var ctx = document.getElementById('incomeChart').getContext('2d');
-        var incomeChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['MA', 'MI', 'JU', 'VI', 'SA'], // Etiquetas de los días
-                datasets: [{
-                    label: 'Ingresos',
-                    data: [50, 70, 80, 60, 90], // Datos de los ingresos
-                    backgroundColor: [
-                        'rgba(200, 200, 200, 0.7)',
-                        'rgba(200, 200, 200, 0.7)',
-                        'rgba(200, 200, 200, 0.7)',
-                        'rgba(200, 200, 200, 0.7)',
-                        'rgba(50, 50, 50, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(200, 200, 200, 1)',
-                        'rgba(200, 200, 200, 1)',
-                        'rgba(200, 200, 200, 1)',
-                        'rgba(200, 200, 200, 1)',
-                        'rgba(50, 50, 50, 1)'
-                    ],
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    barPercentage: 0.6,
-                    categoryPercentage: 0.5
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            stepSize: 20
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-    </script>
+
 </body>
 </html>
