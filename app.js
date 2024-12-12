@@ -153,6 +153,7 @@ function calculateAndDisplayResults(total) {
     const totalIngresosDiaElem = document.getElementById('totalIngresosDia');
     const retirableElem = document.getElementById('retirable');
     const guardarElem = document.getElementById('guardar');
+    const extraElem = document.getElementById('extra');  // Agregamos el elemento extra
 
     if (totalIngresosDiaElem) {
         totalIngresosDiaElem.textContent = total.toFixed(2);
@@ -170,6 +171,12 @@ function calculateAndDisplayResults(total) {
         guardarElem.textContent = guardar;
     } else {
         console.error('Elemento guardar no encontrado.');
+    }
+
+    if (extraElem) {
+        extraElem.textContent = extra;  // Agregamos el valor extra
+    } else {
+        console.error('Elemento extra no encontrado.');
     }
 }
 
