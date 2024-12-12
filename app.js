@@ -191,6 +191,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateDisplayedDate();
     loadSalesDataForDate(currentDate.toISOString().split('T')[0]);
     initializeIncomeChart();
+    document.getElementById('updatePercentagesBtn').addEventListener('click', updatePercentages);
 });
 
 
@@ -504,7 +505,7 @@ async function updatePercentagesInSupabase(p30, p50, p20) {
 }
 
 // Función para mostrar el modal de configuración
-async function updatePercentages() {
+window.updatePercentages = async function() {
     const modal = new bootstrap.Modal(document.getElementById('configModal'));
     
     // Mostrar los valores actuales
@@ -516,7 +517,7 @@ async function updatePercentages() {
 }
 
 // Función para guardar los nuevos porcentajes
-async function savePercentages() {
+window.savePercentages = async function() {
     const p30 = parseFloat(document.getElementById('percentage30Input').value) / 100;
     const p50 = parseFloat(document.getElementById('percentage50Input').value) / 100;
     const p20 = parseFloat(document.getElementById('percentage20Input').value) / 100;
