@@ -180,3 +180,17 @@ body {
   .modal-content {
     border-radius: 0.5rem;
   }
+
+.fa-cog {
+    color: #6c757d;
+    transition: transform 0.3s ease;
+}
+
+.fa-cog:hover {
+    transform: rotate(45deg);
+    color: #495057;
+}
+
+.card small.text-muted {
+    font-size: 0.75rem;
+}

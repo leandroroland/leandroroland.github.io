@@ -5,9 +5,10 @@ import { supabase } from './supabaseClient.js';
 // Variables globales para la fecha actual
 let currentDate = new Date();
 
-// Valores iniciales para los porcentajes
+// Variables globales para los porcentajes
 let percentage30 = 0.3;
-let percentage70 = 0.7;
+let percentage50 = 0.5;
+let percentage20 = 0.2;
 
 // Función para obtener la fecha y hora actuales
 function setCurrentDateTime() {
@@ -146,7 +147,8 @@ async function fetchDailyTotal(date) {
 
 function calculateAndDisplayResults(total) {
     const retirable = (total * percentage30).toFixed(2);
-    const guardar = (total * percentage70).toFixed(2);
+    const guardar = (total * percentage50).toFixed(2);
+    const extra = (total * percentage20).toFixed(2);
 
     const totalIngresosDiaElem = document.getElementById('totalIngresosDia');
     const retirableElem = document.getElementById('retirable');
@@ -181,12 +183,13 @@ async function loadSalesDataForDate(date) {
 
 
 // Ejecutar la función para cargar los datos al cargar la página
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadPercentagesFromSupabase(); // Cargar porcentajes desde Supabase
     populateServiceSelect();
     fetchServicesFromSupabase();
     setCurrentDateTime();
     updateDisplayedDate();
-    loadSalesDataForDate(currentDate.toISOString().split('T')[0]); // Cargar datos para la fecha inicial
+    loadSalesDataForDate(currentDate.toISOString().split('T')[0]);
     initializeIncomeChart();
 });
 
@@ -434,3 +437,127 @@ document.getElementById('next-date').addEventListener('click', function() {
     fetchServicesFromSupabase();
     loadSalesDataForDate(currentDate.toISOString().split('T')[0]); // Actualizar los datos para la nueva fecha
 });
+
+// Función para cargar los porcentajes desde Supabase
+async function loadPercentagesFromSupabase() {
+    try {
+        const { data, error } = await supabase
+            .from('configurations')
+            .select('name, value');
+
+        if (error) throw error;
+
+        data.forEach(config => {
+            switch(config.name) {
+                case 'percentage_retirable':
+                    percentage30 = config.value / 100;
+                    break;
+                case 'percentage_guardar':
+                    percentage50 = config.value / 100;
+                    break;
+                case 'percentage_extra':
+                    percentage20 = config.value / 100;
+                    break;
+            }
+        });
+
+        // Actualizar la UI si es necesario
+        updatePercentagesDisplay();
+    } catch (error) {
+        console.error('Error al cargar porcentajes:', error.message);
+        alert('Error al cargar la configuración');
+    }
+}
+
+// Función para actualizar los porcentajes en Supabase
+async function updatePercentagesInSupabase(p30, p50, p20) {
+    try {
+        const updates = [
+            {
+                name: 'percentage_retirable',
+                value: p30 * 100
+            },
+            {
+                name: 'percentage_guardar',
+                value: p50 * 100
+            },
+            {
+                name: 'percentage_extra',
+                value: p20 * 100
+            }
+        ];
+
+        for (const update of updates) {
+            const { error } = await supabase
+                .from('configurations')
+                .update({ value: update.value })
+                .eq('name', update.name);
+
+            if (error) throw error;
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Error al actualizar porcentajes:', error.message);
+        return false;
+    }
+}
+
+// Función para mostrar el modal de configuración
+async function updatePercentages() {
+    const modal = new bootstrap.Modal(document.getElementById('configModal'));
+    
+    // Mostrar los valores actuales
+    document.getElementById('percentage30Input').value = (percentage30 * 100).toFixed(0);
+    document.getElementById('percentage50Input').value = (percentage50 * 100).toFixed(0);
+    document.getElementById('percentage20Input').value = (percentage20 * 100).toFixed(0);
+    
+    modal.show();
+}
+
+// Función para guardar los nuevos porcentajes
+async function savePercentages() {
+    const p30 = parseFloat(document.getElementById('percentage30Input').value) / 100;
+    const p50 = parseFloat(document.getElementById('percentage50Input').value) / 100;
+    const p20 = parseFloat(document.getElementById('percentage20Input').value) / 100;
+    
+    // Validar que los porcentajes sumen 100%
+    if ((p30 + p50 + p20).toFixed(2) !== '1.00') {
+        alert('Los porcentajes deben sumar 100%');
+        return;
+    }
+    
+    // Actualizar en Supabase
+    const success = await updatePercentagesInSupabase(p30, p50, p20);
+    
+    if (success) {
+        // Actualizar variables locales
+        percentage30 = p30;
+        percentage50 = p50;
+        percentage20 = p20;
+        
+        // Recalcular los resultados
+        loadSalesDataForDate(currentDate.toISOString().split('T')[0]);
+        
+        // Cerrar el modal
+        const modalElement = document.getElementById('configModal');
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
+        
+        alert('Configuración guardada exitosamente');
+    } else {
+        alert('Error al guardar la configuración');
+    }
+}
+
+// Función para actualizar la visualización de los porcentajes en la UI
+function updatePercentagesDisplay() {
+    // Actualizar elementos de la UI que muestran los porcentajes
+    const retirablePercentElem = document.getElementById('retirablePercent');
+    const guardarPercentElem = document.getElementById('guardarPercent');
+    const extraPercentElem = document.getElementById('extraPercent');
+
+    if (retirablePercentElem) retirablePercentElem.textContent = `${(percentage30 * 100).toFixed(0)}%`;
+    if (guardarPercentElem) guardarPercentElem.textContent = `${(percentage50 * 100).toFixed(0)}%`;
+    if (extraPercentElem) extraPercentElem.textContent = `${(percentage20 * 100).toFixed(0)}%`;
+}
