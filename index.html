@@ -32,18 +32,32 @@
                 <div class="info-section">
                     <!-- Ingresos del día -->
                     <div class="card card-custom ps-3 py-2 mb-1 info-block">
-                        <p class="my-1">Ingresos del día</p>
-                        <h1 class="large-number mb-1" id="totalIngresosDia">""</h1>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="my-1">Ingresos del día</p>
+                                <h1 class="large-number mb-1" id="totalIngresosDia">""</h1>
+                            </div>
+                            <button class="btn btn-link" onclick="updatePercentages()">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                        </div>
                     </div>
-                    <!-- Retirable y Guardar en fila -->
+                    <!-- Retirable, Guardar y Extra en fila -->
                     <div class="d-flex justify-content-between">
                         <div class="card card-custom text-center flex-grow-1 me-1">
                             <p class="my-1">Retirable</p>
                             <h4 class="mb-1" id="retirable"></h4>
+                            <small id="retirablePercent" class="text-muted">30%</small>
                         </div>
-                        <div class="card card-custom text-center flex-grow-1">
+                        <div class="card card-custom text-center flex-grow-1 me-1">
                             <p class="my-1">Guardar</p>
                             <h4 class="mb-1" id="guardar"></h4>
+                            <small id="guardarPercent" class="text-muted">50%</small>
+                        </div>
+                        <div class="card card-custom text-center flex-grow-1">
+                            <p class="my-1">Extra</p>
+                            <h4 class="mb-1" id="extra"></h4>
+                            <small id="extraPercent" class="text-muted">20%</small>
                         </div>
                     </div>
                 </div>
@@ -162,6 +176,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="app.js"></script>
     <!-- Script para inicializar el gráfico -->
+
+    <!-- Modal de Configuración -->
+    <div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="configModalLabel">Configurar Porcentajes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="percentage30Input" class="form-label">Porcentaje Retirable (%)</label>
+                        <input type="number" class="form-control" id="percentage30Input" min="0" max="100" step="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="percentage50Input" class="form-label">Porcentaje para Guardar (%)</label>
+                        <input type="number" class="form-control" id="percentage50Input" min="0" max="100" step="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="percentage20Input" class="form-label">Porcentaje Extra (%)</label>
+                        <input type="number" class="form-control" id="percentage20Input" min="0" max="100" step="1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="savePercentages()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
